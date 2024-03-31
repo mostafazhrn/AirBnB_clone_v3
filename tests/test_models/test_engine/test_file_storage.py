@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This shallContains the TestFileStorageDocs classes
+This shallContains the TestFileStorageDocs classes.
 """
 
 from datetime import datetime
@@ -115,7 +115,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(json.loads(string), json.loads(js))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_func_get(self):
+    def test_get(self):
         """ This shall test the get method of file storage"""
         store = FileStorage()
         stt = State(name="California")
@@ -123,9 +123,11 @@ class TestFileStorage(unittest.TestCase):
         store.save()
         stt_id = stt.id
         assert stt == store.get(State, stt_id)
+        new_stt = State(name="Nevada")
+        new_stt.save()
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_func_count(self):
+    def test_count(self):
         """This shall test the count method of file storage"""
         store = FileStorage()
         stt = State(name="New Mexico")

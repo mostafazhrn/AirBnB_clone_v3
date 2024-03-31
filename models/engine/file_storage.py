@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This Shall contains the FileStorage class
+This Shall contains the FileStorage class.
 """
 
 import json

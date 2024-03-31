@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This shall contains the TestDBStorageDocs and TestDBStorage classes
+This shall contains the TestDBStorageDocs and TestDBStorage classes.
 """
 
 from datetime import datetime
@@ -88,7 +88,7 @@ class TestFileStorage(unittest.TestCase):
         """Test that save properly saves objects to file.json"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_func_get(self):
+    def test_get(self):
         """ This shall test the get method of file db storage"""
         store = DBStorage()
         stt = State(name="California")
@@ -96,9 +96,11 @@ class TestFileStorage(unittest.TestCase):
         store.save()
         stt_id = stt.id
         assert stt == store.get(State, stt_id)
+        new_stt = State(name="Nevada")
+        new_stt.save()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_func_count(self):
+    def test_count(self):
         """This shall test the count method of file db storage"""
         store = DBStorage()
         stt = State(name="New Mexico")
