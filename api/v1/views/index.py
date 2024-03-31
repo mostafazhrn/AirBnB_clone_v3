@@ -10,7 +10,7 @@ from models.state import State
 from os import getenv
 
 
-@app.route('/status', methods=['GET'], strict_slashes=False)
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
     """ This instance shall return a JSON-formatted status response """
     return jsonify({"status": "OK"})
