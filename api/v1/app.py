@@ -1,9 +1,11 @@
 #!/usr/bin/python3
-""" This script shall start a Flask web application """
+"""
+This script shall start a Flask web application
+"""
+from api.v1.views import app_views
 from flask import Flask, jsonify
 from flask_cors import CORS
 from models import storage
-from api.v1.views import app_views
 from os import getenv
 
 

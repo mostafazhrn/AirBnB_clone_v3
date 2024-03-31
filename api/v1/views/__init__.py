@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" This script shall create blueprint app_views """
+"""
+This script shall create the blueprint for app_views
+"""
 from flask import Blueprint
 
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
