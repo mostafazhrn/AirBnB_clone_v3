@@ -73,15 +73,19 @@ class DBStorage:
 
     def get(self, cls, id):
         """ This method shall retireve an object"""
-        cle = cls.__name__ + "." + id
-        try:
-            return self.__objects[cle]
-        except KeyError:
+        if type(cls) is str:
+            cls = classes.get(cls)
+        if cls is None:
             return None
+        return self.__session.query(cls).filter(cls.id == id).first()
 
     def count(self, cls=None):
         """This shall count num of instances of class"""
-        return len(self.all(cls))
+        if type(cls) is str:
+            cls = classes.get(cls)
+        if cls is None:
+            return len(self.__session.query(cls).all())
+        return len(self.__session.query(cls).all())
 
     def close(self):
         """call remove() method on the private session attribute"""
