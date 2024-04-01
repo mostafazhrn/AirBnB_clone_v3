@@ -1,11 +1,9 @@
 #!/usr/bin/python3
-""" This script shall start a Flask web application """
+""" This script shall instantinize the Flask web application """
 from api.v1.views import app_views
 from flask import Flask, jsonify, Blueprint
 from flask_cors import CORS
 from models import storage
-from models.state import State
-from os import getenv
 
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
