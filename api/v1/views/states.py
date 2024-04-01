@@ -1,0 +1,47 @@
+#!/usr/bin/python3
+""" This script shall handle state objects of default RestFul API actions """
+from api.v1.views import app_views
+from flask import jsonify, abort, request, Blueprint
+from models import storage
+from models.state import State
+
+
+@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
+def sum_states():
+    """ This instance shall retrieve all objects of states """
+    if request.method == 'GET':
+        return jsonify([stt.to_dict() for stt in storage.all("State").
+                        values()])
+    if request.method == 'POST':
+        pst = request.get_json()
+        if pst is None or type(pst) is not dict:
+            return jsonify({"error": "Not a JSON"}), 400
+        elif pst.get("name") is None:
+            return jsonify({"error": "Missing name"}), 400
+        new_stt = State(**pst)
+        new_stt.save()
+        return jsonify(new_stt.to_dict()), 201
+
+
+@app_views.route('/states/<string:state_id>',
+                 methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+def gt_id(state_id):
+    """ This instance shall get the stt obj using the state id"""
+    stt = storage.get("State", state_id)
+    if stt is None:
+        abort(404)
+    if request.method == 'GET':
+        return jsonify(stt.to_dict())
+    if request.method == 'DELETE':
+        storage.delete(stt)
+        storage.save()
+        return jsonify({}), 200
+    if request.method == 'PUT':
+        pst = request.get_json()
+        if pst is None or type(pst) is not dict:
+            return jsonify({"error": "Not a JSON"}), 400
+        for cle, valu in pst.items():
+            if cle not in ['id', 'created_at', 'updated_at']:
+                setattr(stt, cle, valu)
+        storage.save()
+        return jsonify(stt.to_dict()), 200
