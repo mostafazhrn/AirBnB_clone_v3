@@ -10,9 +10,9 @@ from os import getenv
 
 
 app = Flask(__name__)
-CORS(app, origins="0.0.0.0")
+
 app.register_blueprint(app_views, url_prefix="/api/v1")
-CORS(app_views)
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
@@ -24,7 +24,7 @@ def close(teardown):
 @app.errorhandler(404)
 def not_found(error):
     """ This instance shall return a JSON-formatted 404 response """
-    return ({"error": "Not found"}), 404
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
