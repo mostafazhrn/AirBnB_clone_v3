@@ -28,11 +28,9 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """This instant shall initializes user"""
+        if 'pass' in kwargs:
+            passwd = kwargs['pass']
+            hsh = hashlib.md5()
+            hsh.update(str(passwd).encode('utf-8'))
+            kwargs['pass'] = hsh.hexdigest()
         super().__init__(*args, **kwargs)
-
-    def __setattr__(self, nom, valu):
-        """ This shall convert passwd to md5 hash"""
-        if nom == 'password':
-            self.password = md5(valu.encode()).hexdigest()
-        else:
-            setattr(self, nom, valu)
