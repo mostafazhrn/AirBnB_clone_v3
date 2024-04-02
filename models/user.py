@@ -7,6 +7,7 @@ import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import hashlib
+from hashlib import md5
 
 
 class User(BaseModel, Base):
@@ -27,9 +28,10 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """This instant shall initializes user"""
-        if 'pass' in kwargs:
-            passwd = kwargs['pass']
-            hsh = hashlib.md5()
-            hsh.update(str.encode(passwd))
-            kwargs['pass'] = hsh.hexidigest()
         super().__init__(*args, **kwargs)
+
+    def __initmd5__(self, nom, valu):
+        """This shall convert passwd to md5 hash"""
+        if nom == "password":
+            valu = md5(valu.encode()).hexdigest()
+        super().__initmd5__(nom, valu)
