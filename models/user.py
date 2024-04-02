@@ -27,9 +27,9 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """This instant shall initializes user"""
-        if 'password' in kwargs:
-            passwd = kwargs['password']
+        if 'pass' in kwargs:
+            passwd = kwargs['pass']
             hsh = hashlib.md5()
             hsh.update(str.encode(passwd))
-            kwargs['password'] = hsh.hexidigest()
+            kwargs['pass'] = hsh.hexidigest()
         super().__init__(*args, **kwargs)
