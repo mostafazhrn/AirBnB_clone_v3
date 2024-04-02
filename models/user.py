@@ -30,8 +30,9 @@ class User(BaseModel, Base):
         """This instant shall initializes user"""
         super().__init__(*args, **kwargs)
 
-    def __initmd5__(self, nom, valu):
-        """This shall convert passwd to md5 hash"""
-        if nom == "password":
-            valu = md5(valu.encode()).hexdigest()
-        super().__initmd5__(nom, valu)
+    def __setattr__(self, nom, valu):
+        """ This shall convert passwd to md5 hash"""
+        if nom == 'password':
+            self.password = md5(valu.encode()).hexdigest()
+        else:
+            setattr(self, nom, valu)
